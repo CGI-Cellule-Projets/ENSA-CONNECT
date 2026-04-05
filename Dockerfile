@@ -6,5 +6,6 @@ WORKDIR /app
 COPY . .
 RUN composer install
 RUN composer dump-autoload -o
-RUN composer install --working-dir=chat
-CMD ["php", "start.php"]
+RUN composer install --working-dir=backend/pages/chat
+EXPOSE 4000 9090
+CMD ["php", "backend/global/start.php"]

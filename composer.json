@@ -2,7 +2,8 @@
     "require": {
         "phpmailer/phpmailer": "^7.0",
         "resend/resend-php": "^1.2",
-        "getbrevo/brevo-php": "^4.0"
+        "getbrevo/brevo-php": "^4.0",
+        "google/apiclient": "^2.15"
     },
     "config": {
         "allow-plugins": {

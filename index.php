@@ -1,5 +1,5 @@
 <?php
-header('Location: /chat/index.html');
+header('Location: /chat/index.php');
 exit;
 
 ?>

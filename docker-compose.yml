@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: ensa-connect-app
+    restart: always
+    ports:
+      - "4000:4000"
+      - "9090:9090"
+    env_file:
+      - .env
+    # Optionally mount volumes for development
+    # volumes:
+    #   - .:/app

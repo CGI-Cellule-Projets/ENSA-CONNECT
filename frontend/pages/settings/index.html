@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>ENSA Connect | Settings</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-container": "#78dbc8", "on-surface": "#191c1e", "primary": "#004359",
+                        "primary-container": "#005c78", "surface-container-highest": "#e1e3e5",
+                        "tertiary-container": "#006054", "outline-variant": "#bfc8cd",
+                        "on-surface-variant": "#40484d", "surface-variant": "#e1e3e5", "outline": "#70787d",
+                        "on-background": "#191c1e", "surface-bright": "#f8f9fc", "surface-container-high": "#e6e8eb",
+                        "on-secondary-container": "#576670", "surface-tint": "#176682", "on-primary": "#ffffff",
+                        "background": "#f8f9fc", "surface-container-low": "#f2f4f6", "secondary-container": "#d5e5f1",
+                        "surface-container-lowest": "#ffffff", "secondary": "#51606a", "surface": "#f8f9fc",
+                        "surface-dim": "#d8dadd", "surface-container": "#eceef0", "on-secondary-fixed-variant": "#3a4952",
+                        "error": "#ba1a1a"
+                    },
+                    borderRadius: { DEFAULT: "0.5rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+                    fontFamily: { headline: ["Manrope"], body: ["Inter"], label: ["Inter"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            min-width: 220px;
+            z-index: 50;
+            padding: 0.75rem;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-surface text-on-surface">
+
+    <!-- TOP NAV -->
+    <header class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200/50">
+        <div class="flex justify-between items-center px-6 h-16 max-w-[1440px] mx-auto">
+            <div class="flex items-center gap-8">
+                <span class="text-xl font-headline font-bold tracking-tighter text-primary">ENSA Connect</span>
+            </div>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-tight">
+                <a class="text-slate-500 hover:text-primary transition-colors" href="../newsfeed/index.php">Network</a>
+                <a class="text-slate-500 hover:text-primary transition-colors" href="../chat/index.php">Messages</a>
+                <a class="text-slate-500 hover:text-primary transition-colors" href="#">Careers</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <!-- Notifications -->
+                <div class="relative">
+                    <button id="notif-btn"
+                        class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center p-2 rounded-xl hover:bg-slate-50 relative">
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span
+                            class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+                    </button>
+
+                    <div id="notif-dropdown" class="dropdown-menu p-2 min-w-[320px] max-h-[400px] overflow-y-auto">
+                        <div class="px-3 py-2 mb-2 flex justify-between items-center border-b border-slate-50 pb-3">
+                            <h3 class="font-headline font-bold text-primary">Notifications</h3>
+                            <button
+                                class="text-[10px] font-bold text-slate-400 hover:text-primary uppercase tracking-wider">Mark
+                                all as read</button>
+                        </div>
+                        <div class="flex flex-col gap-1 text-left">
+                            <a href="../newsfeed/index.php#post-123"
+                                class="flex gap-4 p-3 hover:bg-slate-50 rounded-xl transition-all group">
+                                <div class="w-10 h-10 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0">
+                                    <img src="../chat/images/avatar-design_14663198.png"
+                                        class="w-full h-full object-cover">
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-xs text-on-surface leading-tight">
+                                        <span class="font-bold text-primary">Jane Doe</span> published a new post in
+                                        <span class="font-bold">Software Architecture</span>.
+                                    </p>
+                                    <span class="text-[10px] font-bold text-slate-400 mt-1 block">2 mins ago</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div id="userAvatar"
+                        class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-white text-xs font-bold cursor-pointer transition-transform active:scale-95">
+                        ME</div>
+                    <div id="user-dropdown" class="dropdown-menu">
+                        <div class="px-2 py-2 mb-2">
+                            <p class="font-headline font-bold text-primary truncate">John Doe</p>
+                            <p class="text-xs text-on-surface-variant truncate">john.doe@ensa.ma</p>
+                        </div>
+                        <div class="border-t border-slate-100 my-1"></div>
+                        <a href="../profile/index.php"
+                            class="w-full text-left px-3 py-2 text-sm hover:bg-slate-50 text-slate-600 flex items-center gap-2 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">person</span> Profile
+                        </a>
+                        <a href="#"
+                            class="w-full text-left px-3 py-2 text-sm hover:bg-slate-50 text-primary font-bold flex items-center gap-2 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">settings</span> Settings
+                        </a>
+                        <div class="border-t border-slate-100 my-1"></div>
+                        <a href="../../../backend/pages/auth/logout.php"
+                            class="w-full text-left px-3 py-2 text-sm hover:bg-slate-50 text-error flex items-center gap-2 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-lg">logout</span> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[800px] mx-auto pt-24 pb-20 px-4 md:px-6">
+        <h1 class="text-2xl font-headline font-bold text-primary mb-8 flex items-center gap-3">
+            <span class="material-symbols-outlined text-3xl">settings</span>
+            Account Settings
+        </h1>
+
+        <div class="flex flex-col gap-8">
+
+            <!-- Basic Info Section -->
+            <section class="bg-white rounded-xl border border-slate-200/50 overflow-hidden">
+                <div class="p-4 border-b border-slate-100 bg-slate-50/50">
+                    <h2 class="font-bold text-on-surface flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">person</span>
+                        Personal Information
+                    </h2>
+                </div>
+                <div class="p-6">
+                    <form id="info-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">First
+                                Name</label>
+                            <input type="text" value="John"
+                                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Last
+                                Name</label>
+                            <input type="text" value="Doe"
+                                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Current
+                                Position</label>
+                            <input type="text" value="Software Engineering student at ENSA Tangier"
+                                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Interests
+                                (comma separated)</label>
+                            <input type="text" value="Web Development, Cloud, AI"
+                                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none">
+                        </div>
+                        <div class="md:col-span-2 flex flex-col gap-2">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">About
+                                Me</label>
+                            <textarea rows="4"
+                                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none resize-none">Hello! I am a passionate student at ENSA. I'm building modern applications and connecting with fellow engineers.</textarea>
+                        </div>
+                        <div class="md:col-span-2 mt-2">
+                            <button type="submit"
+                                class="px-6 py-2.5 bg-primary text-white rounded-full text-sm font-bold hover:bg-primary-container transition-all active:scale-95">Update
+                                Profile</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Password Change Section -->
+            <section class="bg-white rounded-xl border border-slate-200/50 overflow-hidden">
+                <div class="p-4 border-b border-slate-100 bg-slate-50/50">
+                    <h2 class="font-bold text-on-surface flex items-center gap-2">
+                        <span class="material-symbols-outlined text-lg">lock</span>
+                        Security & Password
+                    </h2>
+                </div>
+                <div class="p-6">
+                    <form id="password-form" class="flex flex-col gap-6 w-full">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Current
+                                Password</label>
+                            <input type="password" placeholder="••••••••"
+                                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none">
+                        </div>
+                        <div class="flex flex-col gap-2 relative">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">New
+                                Password</label>
+                            <input type="password" placeholder="Min 8 characters"
+                                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider ml-1">Confirm New
+                                Password</label>
+                            <input type="password" placeholder="Confirm your new password"
+                                class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none">
+                        </div>
+                        <div class="mt-2">
+                            <button type="submit"
+                                class="px-6 py-2.5 border border-primary text-primary rounded-full text-sm font-bold hover:bg-primary/5 transition-all active:scale-95">Change
+                                Password</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userAvatar = document.getElementById('userAvatar');
+            const userDropdown = document.getElementById('user-dropdown');
+            const notifBtn = document.getElementById('notif-btn');
+            const notifDropdown = document.getElementById('notif-dropdown');
+
+            if (userAvatar && userDropdown) {
+                userAvatar.onclick = (e) => {
+                    e.stopPropagation();
+                    if (notifDropdown) notifDropdown.classList.remove('show');
+                    userDropdown.classList.toggle('show');
+                };
+            }
+
+            if (notifBtn && notifDropdown) {
+                notifBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    if (userDropdown) userDropdown.classList.remove('show');
+                    notifDropdown.classList.toggle('show');
+                };
+            }
+
+            document.addEventListener('click', () => {
+                if (userDropdown) userDropdown.classList.remove('show');
+                if (notifDropdown) notifDropdown.classList.remove('show');
+            });
+        });
+    </script>
+
+</body>
+
+</html>
