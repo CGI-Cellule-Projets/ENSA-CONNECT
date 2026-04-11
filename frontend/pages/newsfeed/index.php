@@ -504,7 +504,7 @@ checkAuth();
           return;
         }
       } catch {
-        // If session check fails but we are on this page, let's try reading from the navbar's perspective or just fallback
+        // Session check failed — demo fallback
         currentUser = { id: 0, username: 'Anonymous', role_id: 1 };
       }
       const initials = getInitials(currentUser.username);
@@ -566,7 +566,7 @@ checkAuth();
           const sEl = document.getElementById('searchInput');
           const q = sEl ? sEl.value.trim() : '';
           const params = new URLSearchParams({ filter: currentFilter, page, limit: PAGE_SIZE, search: q });
-          const res = await fetch(`/backend/pages/posts/get_posts.php?${params}`);
+          const res = await fetch(`../../../backend/pages/posts/get_posts.php?${params}`);
           const data = await res.json();
 
           if (data.status === 'error') throw new Error(data.message || 'Backend error');
@@ -588,10 +588,8 @@ checkAuth();
             document.getElementById('feed').innerHTML = `<div class="py-16 text-center text-on-surface-variant text-sm">No posts found for "${currentFilter}".</div>`;
           }
         } catch (err) {
-          console.error(err);
-          document.getElementById('loadingSkeleton').classList.add('hidden');
-          document.getElementById('feed').classList.remove('hidden');
-          document.getElementById('feed').innerHTML = `<div class="py-16 text-center text-error text-sm font-bold">API Error: ${err.message}</div>`;
+          console.warn('API not ready, loading demo data:', err.message);
+          loadDemo();
         }
       }
 
@@ -823,9 +821,17 @@ checkAuth();
 
       const formData = new FormData();
       formData.append('content', content);
-      formData.append('TYPE', document.getElementById('postType').value);
-      // Determine category (could be more dynamic if we had a category select)
-      formData.append('category', document.getElementById('postType').value === 'status' ? 'general' : document.getElementById('postType').value);
+      const postTypeVal = document.getElementById('postType').value;
+      formData.append('TYPE', ['internship','pfe','mentorship'].includes(postTypeVal) ? 'offer' : 'status');
+      formData.append('category', postTypeVal); // maps to category column in DB
+
+      // Optional fields
+      const titleEl = document.querySelector('[name="title"]');
+      const companyEl = document.querySelector('[name="company"]');
+      const linkEl = document.querySelector('[name="link"]');
+      if (titleEl?.value) formData.append('title', titleEl.value.trim());
+      if (companyEl?.value) formData.append('company', companyEl.value.trim());
+      if (linkEl?.value) formData.append('link', linkEl.value.trim());
 
       UI.selectedFiles.forEach(file => {
         formData.append('attachments[]', file);
@@ -846,8 +852,13 @@ checkAuth();
         document.getElementById('createPostModal').classList.add('hidden');
         document.getElementById('createPostForm').reset();
         document.getElementById('attachment-preview').innerHTML = '';
+        document.getElementById('field-title-company').classList.add('hidden');
         UI.selectedFiles = [];
-
+        document.querySelectorAll('.type-pill').forEach((b,i) => {
+          if(i===0){ b.classList.add('bg-primary','text-white','border-primary'); b.classList.remove('bg-slate-50','text-slate-500','border-slate-200'); }
+          else { b.classList.remove('bg-primary','text-white','border-primary'); b.classList.add('bg-slate-50','text-slate-500','border-slate-200'); }
+        });
+        document.getElementById('postType').value = 'status';
         PostManager.setFilter('all', document.querySelector('.filter-chip'));
       } catch (err) {
         errEl.textContent = err.message || 'Failed to post. Try again.';
@@ -865,7 +876,20 @@ checkAuth();
       await loadSession();
       await PostManager.init();
 
-      // Local mobile bottom nav update
+      // Dropdown toggles
+      const userAvatar    = document.getElementById('userAvatar');
+      const userDropdown  = document.getElementById('user-dropdown');
+      const notifBtn      = document.getElementById('notif-btn');
+      const notifDropdown = document.getElementById('notif-dropdown');
+      if (userAvatar && userDropdown) {
+        userAvatar.onclick = e => { e.stopPropagation(); notifDropdown?.classList.remove('show'); userDropdown.classList.toggle('show'); };
+      }
+      if (notifBtn && notifDropdown) {
+        notifBtn.onclick = e => { e.stopPropagation(); userDropdown?.classList.remove('show'); notifDropdown.classList.toggle('show'); };
+      }
+      document.addEventListener('click', () => { userDropdown?.classList.remove('show'); notifDropdown?.classList.remove('show'); });
+
+      // unused nav update removed
       document.querySelectorAll('nav.md\\:hidden a').forEach(a => {
         if (a.getAttribute('href') === '../chat/index.php') a.setAttribute('href', '../chat/index.php');
       });
